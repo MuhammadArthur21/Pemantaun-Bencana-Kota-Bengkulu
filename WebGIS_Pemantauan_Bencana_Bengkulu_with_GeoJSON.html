@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebGIS Pemantauan Bencana Kota Bengkulu</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <h1>WebGIS Pemantauan Bencana Kota Bengkulu</h1>
+    <div id="map" style="width: 100%; height: 600px;"></div>
+    <script>
+        // Membuat peta
+        var map = L.map('map').setView([-3.8, 102.3], 12);
+
+        // Menambahkan layer tile
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Menambahkan GeoJSON
+        var geojsonLayer = L.geoJSON().addTo(map);
+
+        // Memuat data GeoJSON
+        fetch('Kota_Bengkulu.geojson')
+            .then(response => response.json())
+            .then(data => {
+                geojsonLayer.addData(data);
+            })
+            .catch(error => console.error('Error loading GeoJSON:', error));
+    </script>
+</body>
+</html>
